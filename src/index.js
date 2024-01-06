@@ -18,7 +18,8 @@ const db = require('./models/index');
         if(process.env.DB_SYNC){
             db.sequelize.sync({alter  : true})
         }
-    })
+       
+    });
 
 
 }
