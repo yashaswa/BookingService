@@ -12,10 +12,18 @@ constructor (channel){
 }
     async  sendMessageToQueue (req , res) {
         const channel = await createChannel();
-        const data = { message : 'success'} ;
-        publishMessage(channel , REMINDER_BINDING_KEY , JSON.stringify(data));
+        const payload = { 
+          data :{
+            subject : 'This is notification from queue',
+            content : 'Some queue will subscribe this',
+            recipientEmail: 'sharmayashswa777@gmail.com',
+            notificationTime: '2024-01-25T05:30:00'
+          },
+          service : 'CREATE_TICKET'
+         } ;
+        publishMessage(channel , REMINDER_BINDING_KEY , JSON.stringify(payload));
         return res.status(200).json({
-            message : 'successfully published the event  '
+            message : 'successfully published the event '
         })
     }
 

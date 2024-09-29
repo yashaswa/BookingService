@@ -10,8 +10,10 @@ const db = require('./models/index');
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended : true}));// Read the request body properly
-
-        app.use('/api',apiRoutes);
+    // app.get('/bookingservice/api/v1/home',(req,res) =>{
+    //     return res.json({message : 'hitting the booking services'});
+    // })
+        app.use('/bookingservice/api',apiRoutes);
     app.listen(PORT , ()=>{
         console.log(`server started on port ${PORT}`);
 
