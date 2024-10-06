@@ -11,13 +11,22 @@ constructor (channel){
     
 }
     async  sendMessageToQueue (req , res) {
+        console.log("yashaswa");
+        const {arrivalTime} =  req.body;
+        const {departureTime} = req.body;
+        console.log(req.body);
+        
+        const ArrivalTime = new Date(arrivalTime);
+        
+        const NotificationTime = new Date(ArrivalTime.getTime() - 24 * 60 * 60 * 1000);
+        const notificationTime = NotificationTime.toISOString();
         const channel = await createChannel();
         const payload = { 
           data :{
-            subject : 'This is notification from queue',
-            content : 'Some queue will subscribe this',
+            subject : 'regarding scheduled arrival and departure of you flight',
+            content : `Hello sir you are having a flight at ${arrivalTime} and departure time is ${departureTime} you should come 2 hour prior to arrival time`,
             recipientEmail: 'sharmayashswa777@gmail.com',
-            notificationTime: '2024-01-25T05:30:00'
+            notificationTime: notificationTime
           },
           service : 'CREATE_TICKET'
          } ;
@@ -38,9 +47,8 @@ constructor (channel){
             })
         } catch (error) {
             return res.status(error.statusCode).json({
-                message : error.message,// samjh nahi aayi kanha se aaya
-                success : false,
-                err     : error.explanation,// samjh nahi aayi kanha se aaya kuch import to kiye nahi
+                message : error.message,// jo bhi error aayega uska message 
+                err     : error.explanation,// error ke data ka explaination wala part
                 data    : {}
             })
         }
